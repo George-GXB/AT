@@ -1,0 +1,55 @@
+name: Deploy to GitHub Pages
+
+# master への push だけで自動ビルド・デプロイする。
+# リポジトリ設定で Pages のソースを「GitHub Actions」にしておく必要がある(初回のみ)。
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # OCR のコア(wasm)と言語データを public/ に用意する
+      - run: npm run setup:ocr
+
+      # プロジェクトサイト(https://<user>.github.io/<repo>/)向けにベースパスを設定してビルド
+      - name: Build
+        run: npm run build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
