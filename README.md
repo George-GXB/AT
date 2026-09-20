@@ -8,6 +8,8 @@
 - **端末内保存** — 問題集は IndexedDB に保存し、合計 1GB を上限として管理します
 - **オフライン動作** — 一度開けば機内モードでも出題できます
 
+> 📱 iPhone への導入手順（画面付き）は [docs/setup-guide.html](docs/setup-guide.html) にまとめています。
+
 ## セットアップ
 
 ```bash
@@ -36,22 +38,12 @@ npm run dev         # http://localhost:5173
 ## iPhone で使う
 
 Service Worker とホーム画面へのインストールには **HTTPS が必須**のため、
-`http://<LAN内のIP>:5173` では PWA として動作しません。無料の静的ホスティングに置いてください。
+`http://<LAN内のIP>:5173` では PWA として動作しません。
 
-```bash
-npm run build          # dist/ を生成
-# dist/ を Cloudflare Pages や GitHub Pages に配置する
-```
-
-GitHub Pages のプロジェクトサイト（`https://<user>.github.io/<repo>/`）に置く場合は、
-ビルド時にパスを指定します。
-
-```bash
-BASE_PATH=/<repo>/ npm run build
-```
-
-公開した URL を Safari で開き、共有ボタンから **「ホーム画面に追加」** を選ぶと、
-アドレスバーのないアプリとして起動します。
+`master` への push で `.github/workflows/deploy.yml` が自動的にビルドし、
+GitHub Pages（`https://<user>.github.io/<repo>/`）へ公開します。初回に必要な設定や
+Safari での「ホーム画面に追加」の手順は [docs/setup-guide.html](docs/setup-guide.html)
+に画面付きでまとめています。
 
 ## 問題の作られ方
 

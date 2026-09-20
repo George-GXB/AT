@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>iPhone導入ガイド ― 一問一答</title>
+<style>
+  :root {
+    --bg: #f4f5f8;
+    --surface: #ffffff;
+    --surface-2: #eceef3;
+    --text: #12151c;
+    --text-dim: #5b6472;
+    --border: #dde1e8;
+    --accent: #0a63d6;
+    --accent-soft: #e8f0fe;
+    --correct: #1a8a4f;
+    --correct-soft: #e4f5eb;
+    --warn: #9a6200;
+    --warn-soft: #fff3e0;
+    --code-bg: #eef0f4;
+    --shadow: 0 1px 2px rgba(20, 24, 32, 0.06), 0 8px 24px rgba(20, 24, 32, 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1115;
+      --surface: #191c23;
+      --surface-2: #20242e;
+      --text: #f2f4f8;
+      --text-dim: #9aa3b2;
+      --border: #2c313d;
+      --accent: #6ea2ff;
+      --accent-soft: #17233b;
+      --correct: #38c57e;
+      --correct-soft: #10281c;
+      --warn: #ffb020;
+      --warn-soft: #332405;
+      --code-bg: #12151c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+    line-height: 1.75;
+    padding: 0 16px 80px;
+  }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  header.hero {
+    padding: 48px 0 28px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: clamp(26px, 5vw, 34px);
+    line-height: 1.35;
+    margin: 0 0 12px;
+  }
+
+  .lead {
+    color: var(--text-dim);
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .repo-line {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+  }
+
+  .pill code {
+    color: var(--text);
+  }
+
+  code {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    background: var(--code-bg);
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: 0.9em;
+  }
+
+  a {
+    color: var(--accent);
+  }
+
+  section {
+    margin: 40px 0;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+  }
+
+  .note {
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 14.5px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    margin: 16px 0;
+  }
+  .note.info { border-color: var(--accent); background: var(--accent-soft); }
+  .note.warn { border-color: var(--warn); background: var(--warn-soft); }
+  .note.ok { border-color: var(--correct); background: var(--correct-soft); }
+  .note strong.label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .note.info strong.label { color: var(--accent); }
+  .note.warn strong.label { color: var(--warn); }
+  .note.ok strong.label { color: var(--correct); }
+
+  h2.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    margin: 0 0 18px;
+  }
+
+  .section-title .num {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .step-body p {
+    margin: 0 0 12px;
+  }
+
+  .step-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* --- タイムラインの縦線 --- */
+  .timeline {
+    position: relative;
+    padding-left: 20px;
+    margin-left: 15px;
+    border-left: 2px dashed var(--border);
+  }
+  .timeline > .step {
+    position: relative;
+    margin-bottom: 36px;
+  }
+  .timeline > .step:last-child { margin-bottom: 0; }
+  .timeline > .step .section-title .num {
+    margin-left: -35px;
+  }
+
+  /* --- モックアップ図の共通枠 --- */
+  .mock {
+    margin-top: 16px;
+    border-radius: 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  .mock-window {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .mock-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 10px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-dot {
+    width: 9px; height: 9px; border-radius: 999px;
+    background: var(--border);
+  }
+  .mock-urlbar {
+    flex: 1;
+    margin-left: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 10px;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mock-body { padding: 14px; }
+
+  /* 設定画面: Source プルダウン */
+  .mock-setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+  }
+  .mock-setting-row .k { color: var(--text-dim); white-space: nowrap; }
+  .mock-dropdown {
+    display: flex;
+    align-items: center;
+    flex: none;
+    gap: 8px;
+    border: 2px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 12.5px;
+  }
+  .mock-dropdown svg { width: 12px; height: 12px; }
+
+  /* Actions のチェック行 */
+  .mock-run-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .mock-run-row:last-child { border-bottom: none; }
+  .mock-check {
+    width: 18px; height: 18px; border-radius: 999px;
+    background: var(--correct);
+    color: #fff;
+    display: grid; place-items: center;
+    font-size: 11px; flex: none;
+  }
+  .mock-run-row .name { flex: 1; }
+  .mock-run-row .time { color: var(--text-dim); }
+
+  /* iPhone シルエット */
+  .phone {
+    width: 200px;
+    margin: 0 auto;
+    border: 3px solid var(--border);
+    border-radius: 30px;
+    background: var(--surface);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .phone-notch {
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 4px;
+  }
+  .phone-notch::before {
+    content: "";
+    width: 60px; height: 8px;
+    background: var(--text);
+    opacity: 0.85;
+    border-radius: 999px;
+  }
+  .phone-safari-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .phone-safari-url {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 9.5px;
+    padding: 4px 6px;
+    color: var(--text-dim);
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .phone-screen {
+    height: 150px;
+    background: linear-gradient(180deg, var(--accent-soft), var(--surface));
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+  .phone-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 6px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+  }
+  .toolbar-icon {
+    width: 26px; height: 26px;
+    border-radius: 7px;
+    display: grid; place-items: center;
+    color: var(--text-dim);
+  }
+  .toolbar-icon.hl {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+  .toolbar-icon svg { width: 15px; height: 15px; }
+
+  /* 共有シート */
+  .sheet {
+    position: absolute;
+    left: 8px; right: 8px; bottom: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+    box-shadow: var(--shadow);
+    padding: 8px 10px 10px;
+  }
+  .sheet .grabber {
+    width: 32px; height: 4px; background: var(--border);
+    border-radius: 999px; margin: 0 auto 8px;
+  }
+  .sheet-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10.5px;
+    padding: 6px 4px;
+    border-radius: 6px;
+  }
+  .sheet-row.hl {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .sheet-row .ic {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    background: var(--surface-2);
+    display: grid; place-items: center;
+    flex: none;
+  }
+  .sheet-row.hl .ic { background: var(--accent); color: #fff; }
+  .sheet-row .ic svg { width: 11px; height: 11px; }
+
+  /* ホーム画面 */
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    padding: 16px 10px;
+  }
+  .app-icon {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    margin: 0 auto 4px;
+  }
+  .app-icon.ours {
+    background: #0f1115;
+    position: relative;
+  }
+  .app-icon.ours::before {
+    content: "";
+    position: absolute;
+    left: 14%; top: 14%;
+    width: 34%; height: 34%;
+    background: #4c8dff;
+    border-radius: 30%;
+  }
+  .app-icon.ours::after {
+    content: "";
+    position: absolute;
+    right: 14%; bottom: 14%;
+    width: 34%; height: 34%;
+    border: 1.5px solid #3a404e;
+    border-radius: 30%;
+  }
+  .app-label {
+    font-size: 8.5px;
+    text-align: center;
+    color: var(--text-dim);
+  }
+  .app-label.ours { color: var(--text); font-weight: 600; }
+
+  ul.plain, ol.plain {
+    margin: 0; padding-left: 22px;
+  }
+  ul.plain li, ol.plain li { margin-bottom: 6px; }
+
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+  }
+  details summary {
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14.5px;
+  }
+  details[open] summary { margin-bottom: 8px; }
+  details p { margin: 6px 0 0; font-size: 14px; color: var(--text-dim); }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  @media (max-width: 480px) {
+    .phone { width: 170px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="eyebrow">導入ガイド</span>
+    <h1>「一問一答」をiPhoneに入れる</h1>
+    <p class="lead">
+      追加費用なし・ダウンロード不要。Safariでページを開いて「ホーム画面に追加」するだけで、
+      アプリのように使えるようになります。所要時間はだいたい5分です。
+    </p>
+    <div class="repo-line">
+      <a class="pill" href="https://github.com/George-GXB/AT" target="_blank" rel="noopener">
+        📦 <code>github.com/George-GXB/AT</code>
+      </a>
+      <a class="pill" href="https://george-gxb.github.io/AT/" target="_blank" rel="noopener">
+        🔗 公開URL: <code>george-gxb.github.io/AT/</code>
+      </a>
+    </div>
+  </header>
+
+  <section>
+    <div class="note info">
+      <strong class="label">はじめに</strong>
+      このアプリは GitHub Pages という無料の仕組みでそのまま公開されます。サーバー費用も
+      アプリ内課金もありません。ただし iPhone にアイコンとして追加できるのは
+      <strong>Safari から開いた場合だけ</strong>です。Chrome など他のブラウザでは
+      「ホーム画面に追加」がうまく機能しないので、必ず Safari を使ってください。
+    </div>
+  </section>
+
+  <section class="timeline">
+
+    <div class="step">
+      <h2 class="section-title"><span class="num">1</span>GitHub Pages を有効にする（最初の1回だけ）</h2>
+      <div class="card step-body">
+        <p>
+          リポジトリの設定画面を開き、公開の仕組みを「GitHub Actions」に切り替えます。
+          この操作は最初の1回だけで、以降は不要です。
+        </p>
+        <ol class="plain">
+          <li>
+            <a href="https://github.com/George-GXB/AT/settings/pages" target="_blank" rel="noopener">
+              github.com/George-GXB/AT/settings/pages
+            </a> を開く
+          </li>
+          <li>「Build and deployment」の「Source」を <strong>GitHub Actions</strong> に変更する</li>
+        </ol>
+        <div class="mock">
+          <div class="mock-window">
+            <div class="mock-titlebar">
+              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+              <span class="mock-urlbar">github.com/George-GXB/AT/settings/pages</span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-setting-row">
+                <span class="k">Source</span>
+                <span class="mock-dropdown">
+                  GitHub Actions
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2 class="section-title"><span class="num">2</span>公開が終わるのを待つ</h2>
+      <div class="card step-body">
+        <p>
+          設定を保存すると、自動でビルドと公開が始まります。1〜3分ほどで完了します。
+          進み具合は Actions タブで確認できます。
+        </p>
+        <ol class="plain">
+          <li>
+            <a href="https://github.com/George-GXB/AT/actions" target="_blank" rel="noopener">
+              github.com/George-GXB/AT/actions
+            </a> を開く
+          </li>
+          <li>一番上の実行に緑色のチェック ✓ が付けば公開完了</li>
+        </ol>
+        <div class="mock">
+          <div class="mock-window">
+            <div class="mock-titlebar">
+              <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+              <span class="mock-urlbar">github.com/George-GXB/AT/actions</span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-run-row">
+                <span class="mock-check">✓</span>
+                <span class="name">Deploy to GitHub Pages</span>
+                <span class="time">2分前</span>
+              </div>
+              <div class="mock-run-row" style="opacity:.5">
+                <span class="mock-check" style="background:var(--border)">✓</span>
+                <span class="name">Deploy to GitHub Pages</span>
+                <span class="time">昨日</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="note warn" style="margin-top:14px;">
+          <strong class="label">赤い × が出たら</strong>
+          実行名をクリックしてログを開き、どの手順で失敗したか確認してください。多くの場合は
+          一時的なネットワークエラーなので、Actions タブの「Re-run all jobs」で再実行すれば直ります。
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2 class="section-title"><span class="num">3</span>iPhoneのSafariで開く</h2>
+      <div class="card step-body">
+        <p>
+          iPhoneの <strong>Safari</strong> を起動し、アドレス欄に次のURLを入力します。
+        </p>
+        <p style="text-align:center;"><code style="font-size:15px;">george-gxb.github.io/AT/</code></p>
+        <div class="mock">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-safari-bar">
+              <span class="phone-safari-url">🔒 george-gxb.github.io/AT/</span>
+            </div>
+            <div class="phone-screen">
+              <div class="app-icon ours" style="width:44px;height:44px;"></div>
+            </div>
+            <div class="phone-toolbar">
+              <span class="toolbar-icon">◀</span>
+              <span class="toolbar-icon">▶</span>
+              <span class="toolbar-icon hl">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v12M7 8l5-5 5 5M5 21h14"/>
+                </svg>
+              </span>
+              <span class="toolbar-icon">▢</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2 class="section-title"><span class="num">4</span>「ホーム画面に追加」する</h2>
+      <div class="card step-body">
+        <p>
+          画面下の共有ボタン（上の図の青いアイコン）をタップし、出てきたメニューから
+          <strong>「ホーム画面に追加」</strong>を選びます。
+        </p>
+        <div class="mock">
+          <div class="phone">
+            <div class="phone-notch"></div>
+            <div class="phone-safari-bar">
+              <span class="phone-safari-url">🔒 george-gxb.github.io/AT/</span>
+            </div>
+            <div class="phone-screen" style="align-items:flex-end;">
+              <div class="sheet">
+                <div class="grabber"></div>
+                <div class="sheet-row">
+                  <span class="ic">📋</span> コピー
+                </div>
+                <div class="sheet-row hl">
+                  <span class="ic">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                  </span>
+                  ホーム画面に追加
+                </div>
+                <div class="sheet-row">
+                  <span class="ic">📤</span> ブックにマークを追加
+                </div>
+              </div>
+            </div>
+            <div class="phone-toolbar">
+              <span class="toolbar-icon">◀</span><span class="toolbar-icon">▶</span>
+              <span class="toolbar-icon">↑</span><span class="toolbar-icon">▢</span>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:14px;">
+          名前はそのまま「追加」を押せば完了です。ホーム画面にアプリのアイコンが増えます。
+        </p>
+        <div class="mock">
+          <div class="phone">
+            <div class="home-grid">
+              <div><div class="app-icon"></div><div class="app-label">×××</div></div>
+              <div><div class="app-icon"></div><div class="app-label">×××</div></div>
+              <div><div class="app-icon ours"></div><div class="app-label ours">一問一答</div></div>
+              <div><div class="app-icon"></div><div class="app-label">×××</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <h2 class="section-title"><span class="num">5</span>動作を確認する</h2>
+      <div class="card step-body">
+        <p>追加したアイコンをタップして起動し、次の2点を確認してください。</p>
+        <ul class="plain">
+          <li>アドレスバーのない、アプリらしい画面で開くこと</li>
+          <li>
+            一度開いたあと<strong>機内モード</strong>にしてもう一度アイコンから起動し、
+            そのまま操作できること（オフラインでも動く設計です）
+          </li>
+        </ul>
+        <div class="note ok" style="margin-top:14px;">
+          <strong class="label">初回だけ注意</strong>
+          画像から問題を作る機能を初めて使うとき、文字認識用のデータ（約26MB）を
+          端末にダウンロードします。ここだけは通信が必要なので、初回は
+          Wi-Fi環境で行うことをおすすめします。ダウンロード後は次回から通信不要です。
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section>
+    <h2 style="font-size:18px;">うまくいかないとき</h2>
+
+    <details>
+      <summary>「ホーム画面に追加」の項目が出てこない</summary>
+      <p>
+        Safari以外のブラウザ（Chrome・LINEアプリ内ブラウザなど）で開いている可能性があります。
+        共有ボタンを押す前に、画面上部が Safari のアドレスバーになっているか確認してください。
+      </p>
+    </details>
+
+    <details>
+      <summary>ホーム画面のアイコンが真っ白、または開けない</summary>
+      <p>
+        <a href="https://github.com/George-GXB/AT/actions" target="_blank" rel="noopener">Actions</a>
+        タブで最新の実行が緑チェックになっているか確認してください。まだビルド中か失敗している場合、
+        ページが正しく公開されていません。一度アイコンを削除し、公開完了後にやり直してください。
+      </p>
+    </details>
+
+    <details>
+      <summary>アプリを更新したのに古いまま表示される</summary>
+      <p>
+        オフラインでも使えるようにする仕組み（Service Worker）が、裏側で新しいバージョンを
+        用意してから切り替えます。アプリを一度完全に終了して開き直すと最新版になります。
+        それでも変わらない場合は、ホーム画面のアイコンを一度削除して追加し直してください。
+      </p>
+    </details>
+
+    <details>
+      <summary>今後アプリを更新したら、また同じ手順が必要？</summary>
+      <p>
+        いいえ。<code>master</code> ブランチに変更を push するたびに、GitHub Actions が自動で
+        ビルドして同じURLに再公開します。STEP1（Pages の有効化）は最初の1回だけで、
+        以降はホーム画面のアイコンを開き直すだけで最新の内容になります。
+      </p>
+    </details>
+  </section>
+
+  <footer>
+    このドキュメントはリポジトリ <code>docs/setup-guide.html</code> にあります。
+    アプリ本体の仕組みについては <a href="../README.md">README.md</a> を参照してください。
+  </footer>
+
+</div>
+</body>
+</html>
